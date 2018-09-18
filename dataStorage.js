@@ -11,7 +11,7 @@ module.exports.handlePost = function(request)
   return 'OK';
 };
 
-module.exports.handleGet = function()
+module.exports.handleGet = function(fs, requestedUser)
 {
   var jsonContent = readDataStore();
   var foundUser = {};
