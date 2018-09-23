@@ -1,4 +1,5 @@
 [
-    {"id": 1, "name" : "Italian Junky", "foodType" : "Italian", "description ": "Fun and loud with delicious food", "menu" : "/src/app/images/Italian.png", "saleDescription": "One time only", "saleStart" : "09/30/2018", "saleEnd" : "09/30/2018", "saleLocation" : "Philadelphia, PA"},
-    {"id": 2, "name" : "Mexican Jiggler", "foodType" : "Mexican", "description": "Zesty and authentic", "menu" : "/src/app/images/Mexican.jpg", "saleDescription": "One time only", "saleStart" : "10/30/2018", "saleEnd" : "10/30/2018", "saleLocation" : "Malvern, PA"}
+    {"id": 2, "vendorId" : 2, "saleDescription": "Delicious treats", "start" : "09/30/2018", "end" : "09/30/2018", "address" : "1099 Balsamic Street", "city": "Philadelphia", "state" : "PA", "zip" : "19002"},
+    {"id": 3, "vendorId" : 3, "saleDescription": "One time only", "start" : "09/30/2018", "end" : "09/30/2018", "address" : "1099 Balsamic Street", "city": "Philadelphia", "state" : "PA", "zip" : "19002"},
+    {"id": 4, "vendorId" : 4, "saleDescription": "Hot off the grill", "start" : "10/30/2018", "end" : "10/30/2018", "address" : "101 Vanguard Blvd", "city": "Malvern", "state" : "PA", "zip": "19380"}
 ]

@@ -29,6 +29,42 @@ module.exports.handleGetEvents = function(fs)
   return readDataStore('events.json');
 }
 
+module.exports.handleGetEvent = function(fs, id)
+{
+  var jsonContent = readDataStore('events.json');
+  var foundEvent = {};
+  for (entry in jsonContent) {
+    if(jsonContent[entry].id == id) {
+      foundEvent = jsonContent[entry];
+      var jsonVendorContent = readDataStore('vendor.json');
+      var foundVendor = {};
+      for (entry in jsonVendorContent) {
+        if(jsonVendorContent[entry].id == foundEvent.vendorId) {
+          foundVendor = jsonVendorContent[entry];
+          foundEvent.vendor = foundVendor;
+          break;
+        }
+      }
+      break;
+    }
+  }
+
+  return foundEvent;
+}
+
+module.exports.handleGetVendor = function(fs, vendorId)
+{
+  var jsonContent = readDataStore('vendor.json');
+  var foundUser = {};
+  for (entry in jsonContent) {
+    if(jsonContent[entry].id == vendorId) {
+      foundUser = jsonContent[entry];
+    }
+  }
+
+  return foundUser;
+}
+
 var readDataStore = function(fileName)
 {
   var content = fs.readFileSync(fileName);

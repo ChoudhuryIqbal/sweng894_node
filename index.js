@@ -16,6 +16,18 @@ app.get('/api/getEvents', function(req, res)
   res.send(dataStorage.handleGetEvents(fs));
 });
 
+app.get('/api/getEvent/:id', function(req, res)
+{
+  const id = req.params['id'];
+  res.send(dataStorage.handleGetEvent(fs, id));
+});
+
+app.get('/api/getVendor/:id', function(req, res)
+{
+  const id = req.params['id'];
+  res.send(dataStorage.handleGetVendor(fs, id));
+});
+
 app.post('/api/createAccount', function(req, res)
 {
   res.send(201, dataStorage.handlePost(req));
