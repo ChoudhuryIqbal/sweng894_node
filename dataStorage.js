@@ -26,7 +26,17 @@ module.exports.handleGet = function(fs, requestedUser)
 
 module.exports.handleGetEvents = function(fs)
 {
-  return readDataStore('events.json');
+  var jsonContent = readDataStore('events.json');
+  for (entry in jsonContent) {
+    var jsonVendorContent = readDataStore('vendor.json');
+    for (vendor in jsonVendorContent) {
+      if(jsonVendorContent[vendor].id == jsonContent[entry].vendorId) {
+        jsonContent[entry].vendor = jsonVendorContent[vendor];
+        break;
+      }
+    }
+  }
+  return jsonContent;
 }
 
 module.exports.handleGetEvent = function(fs, id)

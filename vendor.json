@@ -1,0 +1,6 @@
+[
+    {"id" : 1, "name" : "JellyBelly", "foodType" : "Desserts", "descriiption" : "The best desserts in the country", "menu" : "" },
+    {"id" : 2, "name" : "Italian Mob", "foodType" : "Italian", "descriiption" : "Like your crazy Italian aunt", "menu" : "/src/app/images/Italian_Menu.png"},
+    {"id" : 3, "name" : "Carb Junky", "foodType" : "Bakery", "description ": "Fun and loud with delicious food", "menu" : ""},
+    {"id" : 4, "name" : "Mexican Jiggler", "foodType" : "Mexican", "description": "Zesty and authentic", "menu" : "/src/app/images/Mexican.jpg", "saleDescription": "One time only", "saleStart" : "10/30/2018", "saleEnd" : "10/30/2018", "saleLocation" : "Malvern, PA"}
+]
