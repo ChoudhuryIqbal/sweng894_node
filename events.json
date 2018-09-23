@@ -1,0 +1,4 @@
+[
+    {"id": 1, "name" : "Italian Junky", "foodType" : "Italian", "description ": "Fun and loud with delicious food", "menu" : "/src/app/images/Italian.png", "saleDescription": "One time only", "saleStart" : "09/30/2018", "saleEnd" : "09/30/2018", "saleLocation" : "Philadelphia, PA"},
+    {"id": 2, "name" : "Mexican Jiggler", "foodType" : "Mexican", "description": "Zesty and authentic", "menu" : "/src/app/images/Mexican.jpg", "saleDescription": "One time only", "saleStart" : "10/30/2018", "saleEnd" : "10/30/2018", "saleLocation" : "Malvern, PA"}
+]

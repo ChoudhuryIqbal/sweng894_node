@@ -2,9 +2,9 @@ var fs = require('fs');
 
 module.exports.handlePost = function(request)
 {
-  var jsonContent = readDataStore();
+  var jsonContent = readDataStore('users.json');
   jsonContent.push(request.body);
-  fs.writeFile('data.json', JSON.stringify(jsonContent), (err) => {
+  fs.writeFile('users.json', JSON.stringify(jsonContent), (err) => {
     if (err) throw err;
     console.log('Data written to file');
   });
@@ -13,7 +13,7 @@ module.exports.handlePost = function(request)
 
 module.exports.handleGet = function(fs, requestedUser)
 {
-  var jsonContent = readDataStore();
+  var jsonContent = readDataStore('users.json');
   var foundUser = {};
   for (entry in jsonContent) {
     if(jsonContent[entry].username.includes(requestedUser)) {
@@ -24,8 +24,13 @@ module.exports.handleGet = function(fs, requestedUser)
   return foundUser;
 }
 
-var readDataStore = function()
+module.exports.handleGetEvents = function(fs)
 {
-  var content = fs.readFileSync('data.json');
+  return readDataStore('events.json');
+}
+
+var readDataStore = function(fileName)
+{
+  var content = fs.readFileSync(fileName);
   return JSON.parse(content);
 };
