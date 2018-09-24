@@ -30,7 +30,7 @@ module.exports.handleGetEvents = function(fs)
   for (entry in jsonContent) {
     var jsonVendorContent = readDataStore('vendor.json');
     for (vendor in jsonVendorContent) {
-      if(jsonVendorContent[vendor].id == jsonContent[entry].vendorId) {
+      if(jsonVendorContent[vendor].username == jsonContent[entry].vendorUsername) {
         jsonContent[entry].vendor = jsonVendorContent[vendor];
         break;
       }
@@ -43,15 +43,13 @@ module.exports.handleGetEvent = function(fs, id)
 {
   var jsonContent = readDataStore('events.json');
   var foundEvent = {};
-  for (entry in jsonContent) {
-    if(jsonContent[entry].id == id) {
-      foundEvent = jsonContent[entry];
+  for (event in jsonContent) {
+    if(jsonContent[event].id == id) {
+      foundEvent = jsonContent[event];
       var jsonVendorContent = readDataStore('vendor.json');
-      var foundVendor = {};
-      for (entry in jsonVendorContent) {
-        if(jsonVendorContent[entry].id == foundEvent.vendorId) {
-          foundVendor = jsonVendorContent[entry];
-          foundEvent.vendor = foundVendor;
+      for (vendor in jsonVendorContent) {
+        if(jsonVendorContent[vendor].username == foundEvent.vendorUsername) {
+          foundEvent.vendor = jsonVendorContent[vendor];
           break;
         }
       }
