@@ -1,6 +1,6 @@
 [
     {"username" : "user1", "name" : "JellyBelly", "foodType" : "Desserts", "descriiption" : "The best desserts in the country", "menu" : "" },
     {"username" : "user2", "name" : "Italian Mob", "foodType" : "Italian", "descriiption" : "Like your crazy Italian aunt", "menu" : "/src/app/images/Italian_Menu.png"},
-    {"username" : "user3", "name" : "Carb Junky", "foodType" : "Bakery", "description ": "Fun and loud with delicious food", "menu" : ""},
-    {"username" : "user4", "name" : "Mexican Jiggler", "foodType" : "Mexican", "description": "Zesty and authentic", "menu" : "/src/app/images/Mexican.jpg", "saleDescription": "One time only", "saleStart" : "10/30/2018", "saleEnd" : "10/30/2018", "saleLocation" : "Malvern, PA"}
+    {"username" : "user3", "name" : "Carb Junky", "foodType" : "Bakery", "description ": "Fun and loud with delicious food", "menu" : "/src/app/images/bakery_menu.jpg"},
+    {"username" : "user4", "name" : "Mexican Jiggler", "foodType" : "Mexican", "description": "Zesty and authentic", "menu" : "/src/app/images/Mexican.jpg"}
 ]
