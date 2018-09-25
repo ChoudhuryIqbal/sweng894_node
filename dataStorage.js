@@ -11,6 +11,29 @@ module.exports.handlePost = function(request)
   return 'OK';
 };
 
+module.exports.handleEventPost = function(request)
+{
+  var jsonContent = readDataStore('events.json');
+  jsonContent.push(request.body);
+  fs.writeFile('events.json', JSON.stringify(jsonContent), (err) => {
+    if (err) throw err;
+    console.log('Data written to file');
+  });
+  return 'OK';
+};
+
+module.exports.handleVendorPost = function(request)
+{
+	console.log(request.body);
+	var jsonContent = readDataStore('vendor.json');
+	jsonContent.push(request.body);
+	fs.writeFile('vendor.json', JSON.stringify(jsonContent), (err) => {
+    if (err) throw err;
+    console.log('Data written to file');
+  });
+  return 'OK';
+};
+
 module.exports.handleGet = function(fs, requestedUser)
 {
   var jsonContent = readDataStore('users.json');

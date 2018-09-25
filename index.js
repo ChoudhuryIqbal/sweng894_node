@@ -33,6 +33,16 @@ app.post('/api/createAccount', function(req, res)
   res.send(201, dataStorage.handlePost(req));
 });
 
+app.post('/api/createEvent', function(req, res)
+{
+	res.send(201, dataStorage.handleEventPost(req));
+});
+
+app.post('/api/createVendor', function(req, res)
+{
+	res.send(201, dataStorage.handleVendorPost(req));
+});
+
 app.listen(8080, function()
 {
   console.log('Food truck vendor listening on port 8080!');

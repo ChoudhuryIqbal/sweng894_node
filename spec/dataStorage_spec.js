@@ -1,5 +1,6 @@
 var dataStorage = require("../dataStorage");
 
+
 describe("Truck server API", function() {
 
   it("accepts and stores a JSON request", function() {
