@@ -1,5 +1,1 @@
-[
-    {"id": 2, "vendorUsername" : "user2", "saleDescription": "Delicious treats", "start" : "09/30/2018 4:30 PM", "end" : "09/30/2018 10:30 PM", "address" : "1099 Balsamic Street, Philadelphia PA 19002"},
-    {"id": 3, "vendorUsername" : "user3", "saleDescription": "One time only", "start" : "09/30/2018 10:00 AM", "end" : "09/30/2018 3:00 PM", "address" : "1099 Balsamic Street, Philadelphia PA 19002"},
-    {"id": 4, "vendorUsername" : "user4", "saleDescription": "Hot off the grill", "start" : "10/30/2018 5:00 PM", "end" : "10/30/2018 9:00 PM", "address" : "101 Vanguard Blvd, Malvern PA 19380"}
-]
+[{"id":2,"vendorUsername":"user2","saleDescription":"Delicious treats","start":"09/30/2018 4:30 PM","end":"09/30/2018 10:30 PM","address":"1099 Balsamic Street, Philadelphia PA 19002"},{"id":3,"vendorUsername":"user3","saleDescription":"One time only","start":"09/30/2018 10:00 AM","end":"09/30/2018 3:00 PM","address":"1099 Balsamic Street, Philadelphia PA 19002"},{"id":4,"vendorUsername":"user4","saleDescription":"Hot off the grill","start":"10/30/2018 5:00 PM","end":"10/30/2018 9:00 PM","address":"101 Vanguard Blvd, Malvern PA 19380"},{},{"id":0,"vendorUsername":"asdlasd","saleDescription":"aosidjioasd","start":null,"end":null,"address":"asdiajdo"}]

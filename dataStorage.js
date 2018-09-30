@@ -1,19 +1,35 @@
 var fs = require('fs');
+var DataValidator = require ('./dataValidator.js');
 
 module.exports.handlePost = function(request)
 {
+	var validator = new DataValidator();
+	var sanitizedInput = validator.username(request.body.username).password(request.body.password).getResult();
   var jsonContent = readDataStore('users.json');
-  jsonContent.push(request.body);
+  jsonContent.push(sanitizedInput);
   fs.writeFile('users.json', JSON.stringify(jsonContent), (err) => {
-    if (err) throw err;
+    if (err){
+			console.log(err);
+			throw err;
+		} 
     console.log('Data written to file');
   });
   return 'OK';
 };
 
+var validateUserBody = function(body)
+{
+	if(body.username == null || typeof body.username !== string
+		|| body.password == null || typeof body.password !== string)
+		{
+			throw error;
+		}
+};
+
 module.exports.handleEventPost = function(request)
 {
   var jsonContent = readDataStore('events.json');
+	console.log()
   jsonContent.push(request.body);
   fs.writeFile('events.json', JSON.stringify(jsonContent), (err) => {
     if (err) throw err;

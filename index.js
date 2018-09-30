@@ -30,7 +30,15 @@ app.get('/api/getVendor/:id', function(req, res)
 
 app.post('/api/createAccount', function(req, res)
 {
-  res.send(201, dataStorage.handlePost(req));
+	try
+	{
+		res.send(201, dataStorage.handlePost(req));
+	}
+	catch (err)
+	{
+		console.log(err);
+		res.send(400, "invalid request");
+	}
 });
 
 app.post('/api/createEvent', function(req, res)
