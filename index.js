@@ -28,6 +28,12 @@ app.get('/api/getVendor/:id', function(req, res)
   res.send(dataStorage.handleGetVendor(fs, id));
 });
 
+app.get('/api/getReviews/:vendorUsername', function(req, res)
+{
+  const vendorUsername = req.params['vendorUsername'];
+  res.send(dataStorage.handleGetReviews(fs, vendorUsername));
+});
+
 app.post('/api/createAccount', function(req, res)
 {
 	try
@@ -39,6 +45,11 @@ app.post('/api/createAccount', function(req, res)
 		console.log(err);
 		res.send(400, "invalid request");
 	}
+});
+
+app.post('/api/createReview', function(req, res)
+{
+		res.send(201, dataStorage.handleReviewPost(req));
 });
 
 app.post('/api/createEvent', function(req, res)

@@ -38,6 +38,18 @@ module.exports.handleEventPost = function(request)
   return 'OK';
 };
 
+module.exports.handleReviewPost = function(request)
+{
+  var jsonContent = readDataStore('reviews.json');
+	console.log()
+  jsonContent.push(request.body);
+  fs.writeFile('reviews.json', JSON.stringify(jsonContent), (err) => {
+    if (err) throw err;
+    console.log('Data written to file ' + jsonContent);
+  });
+  return 'OK';
+};
+
 module.exports.handleVendorPost = function(request)
 {
 	console.log(request.body);
@@ -49,6 +61,19 @@ module.exports.handleVendorPost = function(request)
   });
   return 'OK';
 };
+
+module.exports.handleGetReviews = function(fs, vendorUsername)
+{
+  var jsonContent = readDataStore('reviews.json');
+  var foundUser = {};
+  for (entry in jsonContent) {
+    if(jsonContent[entry].vendorUsername.includes(vendorUsername)) {
+      foundUser[entry]=jsonContent[entry];
+    }
+  }
+
+  return foundUser;
+}
 
 module.exports.handleGet = function(fs, requestedUser)
 {
