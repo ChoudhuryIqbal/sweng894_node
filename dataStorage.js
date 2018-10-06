@@ -47,7 +47,7 @@ module.exports.handleReviewPost = function(request)
     if (err) throw err;
     console.log('Data written to file ' + jsonContent);
   });
-  return 'OK';
+  return JSON.stringify(jsonContent);
 };
 
 module.exports.handleVendorPost = function(request)
@@ -65,10 +65,10 @@ module.exports.handleVendorPost = function(request)
 module.exports.handleGetReviews = function(fs, vendorUsername)
 {
   var jsonContent = readDataStore('reviews.json');
-  var foundUser = {};
+  var foundUser = [];
   for (entry in jsonContent) {
     if(jsonContent[entry].vendorUsername.includes(vendorUsername)) {
-      foundUser[entry]=jsonContent[entry];
+      foundUser.push(jsonContent[entry]);
     }
   }
 
