@@ -1,7 +1,7 @@
 var fs = require('fs');
 var DataValidator = require ('./dataValidator.js');
 
-module.exports.handlePost = function(request)
+module.exports.handleCreateAccountPost = function(request)
 {
 	var validator = new DataValidator();
 	var sanitizedInput = validator.username(request.body.username).password(request.body.password).getResult();
@@ -14,7 +14,7 @@ module.exports.handlePost = function(request)
 		} 
     console.log('Data written to file');
   });
-  return 'OK';
+  return JSON.stringify(jsonContent);
 };
 
 var validateUserBody = function(body)

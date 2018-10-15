@@ -38,7 +38,8 @@ app.post('/api/createAccount', function(req, res)
 {
 	try
 	{
-		res.send(201, dataStorage.handlePost(req));
+		console.log("in create");
+		res.send(201, dataStorage.handleCreateAccountPost(req));
 	}
 	catch (err)
 	{
