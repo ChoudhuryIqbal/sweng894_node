@@ -1,5 +1,5 @@
 var express = require('express');
-var dataStorage = require('./dataStorage.js');
+var dataStorage = require('./dbDataStorage.js');
 var bodyParser = require('body-parser');
 var app = express();
 var fs = require('fs');
@@ -8,7 +8,14 @@ app.use(bodyParser.json());
 app.get('/api/getAccount/:user', function(req, res)
 {
   const requestedUser = req.params['user'];
-  res.send(dataStorage.handleGet(fs, requestedUser));
+  var query =  dataStorage.handleGet(fs, requestedUser)
+  query.exec(function(err,results){
+   if(err)
+      res.send(err);
+   results.forEach(function(result){
+      res.send(result);
+   });
+  });
 });
 
 app.get('/api/getEvents', function(req, res)

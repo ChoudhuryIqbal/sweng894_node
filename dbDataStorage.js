@@ -1,7 +1,7 @@
 var DataValidator = require ('./dataValidator.js');
 
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/test");
+mongoose.connect("mongodb://35.185.38.132:18555/trucks");
 
 var db = mongoose.connection;
 
@@ -16,7 +16,7 @@ var userSchema = new Schema({
 	     password: String
 	 });
 
-module.exports.handlePost = function(request)
+module.exports.handleCreateAccountPost = function(request)
 {
 	 var User = mongoose.model("user", userSchema);
 	 
