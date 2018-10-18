@@ -38,13 +38,22 @@ var eventSchema = new Schema({
 	address:String
 });
 
+var vendorSchema = new Schema({
+	username:String,
+	name:String,
+	foodType:String,
+	description:String,
+	menu:String
+});
+
 module.exports.handleCreateAccountPost = function(request)
 {
 	 var User = mongoose.model("user", userSchema);
 	 
 	 var thisUser = new User({
 	     username: request.body.username,
-	     password: request.body.password
+	     password: request.body.password,
+	     menu: request.body.menu
 	 });
 	 
 	 thisUser.save(function(error) {
@@ -96,14 +105,22 @@ module.exports.handleReviewPost = function(request)
 
 module.exports.handleVendorPost = function(request)
 {
-	console.log(request.body);
-	var jsonContent = readDataStore('vendor.json');
-	jsonContent.push(request.body);
-	fs.writeFile('vendor.json', JSON.stringify(jsonContent), (err) => {
-    if (err) throw err;
-    console.log('Data written to file');
-  });
-  return 'OK';
+	var Vendor = mongoose.model("vendor", vendorSchema);
+		 
+	 var thisVendor = new Vendor({
+		username:request.body.username,
+		name:request.body.name,
+		foodType:request.body.foodType,
+		description:request.body.description,
+		menu:request.body.menu
+	 });
+	 
+	 thisVendor.save(function(error) {
+	     console.log("Vendor has been saved!");
+	 if (error) {
+	     console.error(error);
+	  }
+	 });
 };
 
 module.exports.handleGetReviews = function(fs, requestedUsername)
@@ -122,55 +139,21 @@ module.exports.handleGet = function(fs, requestedUser)
 
 module.exports.handleGetEvents = function(fs)
 {
-  var jsonContent = readDataStore('events.json');
-  for (entry in jsonContent) {
-    var jsonVendorContent = readDataStore('vendor.json');
-    for (vendor in jsonVendorContent) {
-      if(jsonVendorContent[vendor].username == jsonContent[entry].vendorUsername) {
-        jsonContent[entry].vendor = jsonVendorContent[vendor];
-        break;
-      }
-    }
-  }
-  return jsonContent;
-}
+  	var Event = mongoose.model("event", eventSchema);
 
-module.exports.handleGetEvent = function(fs, id)
+	return Event.find({});
+};
+
+module.exports.handleGetEvent = function(fs, requestedID)
 {
-  var jsonContent = readDataStore('events.json');
-  var foundEvent = {};
-  for (event in jsonContent) {
-    if(jsonContent[event].id == id) {
-      foundEvent = jsonContent[event];
-      var jsonVendorContent = readDataStore('vendor.json');
-      for (vendor in jsonVendorContent) {
-        if(jsonVendorContent[vendor].username == foundEvent.vendorUsername) {
-          foundEvent.vendor = jsonVendorContent[vendor];
-          break;
-        }
-      }
-      break;
-    }
-  }
+  	var Event = mongoose.model("event", eventSchema);
 
-  return foundEvent;
+	return Event.find({id: requestedID});
 }
 
 module.exports.handleGetVendor = function(fs, vendorId)
 {
-  var jsonContent = readDataStore('vendor.json');
-  var foundUser = {};
-  for (entry in jsonContent) {
-    if(jsonContent[entry].id == vendorId) {
-      foundUser = jsonContent[entry];
-    }
-  }
+  	var Vendor = mongoose.model("vendor", vendorSchema);
 
-  return foundUser;
+	return Vendor.find({username: vendorId});
 }
-
-var readDataStore = function(fileName)
-{
-  var content = fs.readFileSync(fileName);
-  return JSON.parse(content);
-};

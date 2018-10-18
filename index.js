@@ -20,19 +20,38 @@ app.get('/api/getAccount/:user', function(req, res)
 
 app.get('/api/getEvents', function(req, res)
 {
-  res.send(dataStorage.handleGetEvents(fs));
+  var query =  dataStorage.handleGetEvents(fs)
+  query.exec(function(err,results){
+	   if(err)
+	      res.send(400, err);
+	   res.send(200, results);
+   });
 });
 
 app.get('/api/getEvent/:id', function(req, res)
 {
   const id = req.params['id'];
-  res.send(dataStorage.handleGetEvent(fs, id));
+  var query =  dataStorage.handleGetEvent(fs, id)
+  query.exec(function(err,results){
+   if(err)
+      res.send(400, err);
+   results.forEach(function(result){
+      res.send(200, result);
+   });
+  });
 });
 
 app.get('/api/getVendor/:id', function(req, res)
 {
   const id = req.params['id'];
-  res.send(dataStorage.handleGetVendor(fs, id));
+  var query =  dataStorage.handleGet(fs, id)
+  query.exec(function(err,results){
+   if(err)
+      res.send(400, err);
+   results.forEach(function(result){
+      res.send(200, result);
+   });
+  });
 });
 
 app.get('/api/getReviews/:vendorUsername', function(req, res)
