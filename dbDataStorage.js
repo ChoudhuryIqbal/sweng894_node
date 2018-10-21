@@ -49,13 +49,13 @@ var vendorSchema = new Schema({
 module.exports.handleCreateAccountPost = function(request)
 {
 	 var User = mongoose.model("user", userSchema);
-	 
+
 	 var thisUser = new User({
 	     username: request.body.username,
 	     password: request.body.password,
 	     menu: request.body.menu
 	 });
-	 
+
 	 thisUser.save(function(error) {
 	     console.log("User has been saved!");
 	 if (error) {
@@ -67,7 +67,7 @@ module.exports.handleCreateAccountPost = function(request)
 module.exports.handleEventPost = function(request)
 {
   	var Event = mongoose.model("event", eventSchema);
-	 
+
 	 var thisEvent = new Event({
 	        id:request.body.id,
 		vendorUsername:request.body.vendorUsername,
@@ -76,7 +76,7 @@ module.exports.handleEventPost = function(request)
 		end:request.body.end,
 		address:request.body.address
 	 });
-	 
+
 	 thisEvent.save(function(error) {
 	     console.log("Event has been saved!");
 	 if (error) {
@@ -88,13 +88,13 @@ module.exports.handleEventPost = function(request)
 module.exports.handleReviewPost = function(request)
 {
 	var Review = mongoose.model("review", reviewSchema);
-		 
+
 	 var thisReview = new Review({
 		vendorUsername: request.body.vendorUsername,
 		comment: request.body.comment,
 		rating: request.body.rating
 	 });
-	 
+
 	 thisReview.save(function(error) {
 	     console.log("Review has been saved!");
 	 if (error) {
@@ -106,7 +106,7 @@ module.exports.handleReviewPost = function(request)
 module.exports.handleVendorPost = function(request)
 {
 	var Vendor = mongoose.model("vendor", vendorSchema);
-		 
+
 	 var thisVendor = new Vendor({
 		username:request.body.username,
 		name:request.body.name,
@@ -114,7 +114,7 @@ module.exports.handleVendorPost = function(request)
 		description:request.body.description,
 		menu:request.body.menu
 	 });
-	 
+
 	 thisVendor.save(function(error) {
 	     console.log("Vendor has been saved!");
 	 if (error) {
@@ -156,4 +156,4 @@ module.exports.handleGetVendor = function(fs, vendorId)
   	var Vendor = mongoose.model("vendor", vendorSchema);
 
 	return Vendor.find({username: vendorId});
-}
+};

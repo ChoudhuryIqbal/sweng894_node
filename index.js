@@ -22,22 +22,59 @@ app.get('/api/getEvents', function(req, res)
 {
   var query =  dataStorage.handleGetEvents(fs)
   query.exec(function(err,results){
-	   if(err)
-	      res.send(400, err);
-	   res.send(200, results);
+    var newResults = [];
+    if(err)
+    {
+      res.send(400, error);
+    }
+
+    var resultsProcessedSoFar = 0;
+    results.forEach(function(result)
+    {
+      dataStorage.handleGetVendor(fs, result.vendorUsername).exec(function(error, vendors)
+      {
+        if(error)
+        {
+          res.send(400, error);
+        }
+        var mergedResult = JSON.parse(JSON.stringify(result));
+        mergedResult.vendor = vendors[0];
+        newResults.push(mergedResult);
+        resultsProcessedSoFar++;
+
+        if(resultsProcessedSoFar === results.length)
+        {
+          res.send(200, newResults);
+        }
+      });
+    });
    });
 });
 
 app.get('/api/getEvent/:id', function(req, res)
 {
   const id = req.params['id'];
-  var query =  dataStorage.handleGetEvent(fs, id)
-  query.exec(function(err,results){
-   if(err)
-      res.send(400, err);
-   results.forEach(function(result){
-      res.send(200, result);
-   });
+  var query =  dataStorage.handleGetEvent(fs, id);
+  query.exec(function(error, results)
+  {
+    if(error)
+    {
+      res.send(400, error);
+    }
+
+    results.forEach(function(result)
+    {
+      if(error)
+      {
+        res.send(400, error);
+      }
+      dataStorage.handleGetVendor(fs, result.vendorUsername).exec(function(error, vendors)
+      {
+        var mergedResult = JSON.parse(JSON.stringify(result));
+        mergedResult.vendor = vendors[0];
+        res.send(200, mergedResult);
+      });
+    });
   });
 });
 
