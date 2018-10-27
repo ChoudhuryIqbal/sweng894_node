@@ -5,16 +5,37 @@ module.exports.handleCreateAccountPost = function(request)
 {
 	var validator = new DataValidator();
 	var sanitizedInput = validator.username(request.body.username).password(request.body.password).getResult();
-  var jsonContent = readDataStore('users.json');
-  jsonContent.push(sanitizedInput);
-  fs.writeFile('users.json', JSON.stringify(jsonContent), (err) => {
+  var userJsonContent = readDataStore('users.json');
+  userJsonContent.push(sanitizedInput);
+  fs.writeFile('users.json', JSON.stringify(userJsonContent), (err) => {
     if (err){
 			console.log(err);
 			throw err;
 		} 
     console.log('Data written to file');
   });
-  return JSON.stringify(jsonContent);
+  
+  if(request.body.name){
+    var vendorJsonContent = readDataStore('vendor.json');
+
+    vendorJsonContent.push({
+      "username" : request.body.username, 
+      "name" : request.body.name, 
+      "description" : request.body.description, 
+      "foodType" : request.body.foodType, 
+      "menu" : request.body.menu});
+
+    fs.writeFile('vendor.json', JSON.stringify(vendorJsonContent), (err) => {
+      if (err){
+        console.log(err);
+        throw err;
+      } 
+      console.log('Data written to file');
+    });
+
+  }
+
+  return JSON.stringify(userJsonContent);
 };
 
 var validateUserBody = function(body)
@@ -124,12 +145,12 @@ module.exports.handleGetEvent = function(fs, id)
   return foundEvent;
 }
 
-module.exports.handleGetVendor = function(fs, vendorId)
+module.exports.handleGetVendor = function(fs, vendorUsername)
 {
   var jsonContent = readDataStore('vendor.json');
   var foundUser = {};
   for (entry in jsonContent) {
-    if(jsonContent[entry].id == vendorId) {
+    if(jsonContent[entry].username == vendorUsername) {
       foundUser = jsonContent[entry];
     }
   }

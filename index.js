@@ -22,10 +22,10 @@ app.get('/api/getEvent/:id', function(req, res)
   res.send(dataStorage.handleGetEvent(fs, id));
 });
 
-app.get('/api/getVendor/:id', function(req, res)
+app.get('/api/getVendor/:username', function(req, res)
 {
-  const id = req.params['id'];
-  res.send(dataStorage.handleGetVendor(fs, id));
+  const username = req.params['username'];
+  res.send(dataStorage.handleGetVendor(fs, username));
 });
 
 app.get('/api/getReviews/:vendorUsername', function(req, res)

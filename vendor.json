@@ -1,6 +1,1 @@
-[
-    {"username" : "user1", "name" : "JellyBelly", "foodType" : "Desserts", "descriiption" : "The best desserts in the country", "menu" : "" },
-    {"username" : "user2", "name" : "Italian Mob", "foodType" : "Italian", "descriiption" : "Like your crazy Italian aunt", "menu" : "/src/app/images/Italian_Menu.png"},
-    {"username" : "user3", "name" : "Carb Junky", "foodType" : "Bakery", "description ": "Fun and loud with delicious food", "menu" : "/src/app/images/bakery_menu.jpg"},
-    {"username" : "user4", "name" : "Mexican Jiggler", "foodType" : "Mexican", "description": "Zesty and authentic", "menu" : "/src/app/images/Mexican.jpg"}
-]
+[{"username":"user1","name":"JellyBelly","foodType":"Desserts","descriiption":"The best desserts in the country","menu":""},{"username":"user2","name":"Italian Mob","foodType":"Italian","descriiption":"Like your crazy Italian aunt","menu":"/src/app/images/Italian_Menu.png"},{"username":"user3","name":"Carb Junky","foodType":"Bakery","description ":"Fun and loud with delicious food","menu":"/src/app/images/bakery_menu.jpg"},{"username":"user4","name":"Mexican Jiggler","foodType":"Mexican","description":"Zesty and authentic","menu":"/src/app/images/Mexican.jpg"},{"username":"kona","name":"KonaBear","description":"Great food and you can bring your dogs","foodType":"Fluffy puppy","menu":["Steak","Lobster"]}]
