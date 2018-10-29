@@ -12,25 +12,25 @@ db.once("open", function(callback) {
 
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
-	username: String,
+	username: {
+		type: String,
+		unique: true
+	},
 	password: String,
-	menu:
-	[
-		{
-			name: String,
-			price: Number
-		}
-	]
 });
 
 var reviewSchema = new Schema({
 	vendorUsername:String,
 	comment: String,
-	rating: Number
+	rating: Number, 
+	loggedInUser : String
 });
 
 var eventSchema = new Schema({
-	id:Number,
+	id: {
+		type:Number,
+		unique : true
+	},
 	vendorUsername:String,
 	saleDescription:String,
 	start:String,
@@ -39,11 +39,14 @@ var eventSchema = new Schema({
 });
 
 var vendorSchema = new Schema({
-	username:String,
+	username:{
+		type: String,
+		unique: true
+	},
 	name:String,
 	foodType:String,
 	description:String,
-	menu:String
+	menu:Array
 });
 
 module.exports.handleCreateAccountPost = function(request)
@@ -53,7 +56,6 @@ module.exports.handleCreateAccountPost = function(request)
 	 var thisUser = new User({
 	     username: request.body.username,
 	     password: request.body.password,
-	     menu: request.body.menu
 	 });
 
 	 thisUser.save(function(error) {
@@ -92,7 +94,8 @@ module.exports.handleReviewPost = function(request)
 	 var thisReview = new Review({
 		vendorUsername: request.body.vendorUsername,
 		comment: request.body.comment,
-		rating: request.body.rating
+		rating: request.body.rating,
+		loggedInUser : request.body.loggedInUser
 	 });
 
 	 thisReview.save(function(error) {
@@ -121,6 +124,15 @@ module.exports.handleVendorPost = function(request)
 	     console.error(error);
 	  }
 	 });
+};
+
+module.exports.handleDeleteEvent = function()
+{
+	var Event = mongoose.model("event", eventSchema);
+
+	Event.findByIdAndRemove();
+	Event.findAndModify ("5bcd0d7cdb8017036492b66a", { id: '1' });
+	return "ok";
 };
 
 module.exports.handleGetReviews = function(fs, requestedUsername)
@@ -157,3 +169,19 @@ module.exports.handleGetVendor = function(fs, vendorId)
 
 	return Vendor.find({username: vendorId});
 };
+
+module.exports.handleGetVendors = function(fs)
+{
+  	var Vendor = mongoose.model("vendor", vendorSchema);
+
+	return Vendor.find({});
+};
+
+module.exports.handleGetUsers = function(fs)
+{
+  	var User = mongoose.model("user", userSchema);
+
+	return User.find({});
+};
+
+

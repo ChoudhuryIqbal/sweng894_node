@@ -11,9 +11,9 @@ app.get('/api/getAccount/:user', function(req, res)
   var query =  dataStorage.handleGet(fs, requestedUser)
   query.exec(function(err,results){
    if(err)
-      res.send(400, err);
+   res.status(400).send(error);
    results.forEach(function(result){
-      res.send(200, result);
+    res.status(200).send(result);
    });
   });
 });
@@ -25,7 +25,7 @@ app.get('/api/getEvents', function(req, res)
     var newResults = [];
     if(err)
     {
-      res.send(400, error);
+      res.status(400).send(error);
     }
 
     var resultsProcessedSoFar = 0;
@@ -35,7 +35,7 @@ app.get('/api/getEvents', function(req, res)
       {
         if(error)
         {
-          res.send(400, error);
+          res.status(400).send(error);
         }
         var mergedResult = JSON.parse(JSON.stringify(result));
         mergedResult.vendor = vendors[0];
@@ -44,12 +44,37 @@ app.get('/api/getEvents', function(req, res)
 
         if(resultsProcessedSoFar === results.length)
         {
-          res.send(200, newResults);
+          res.status(200).send(newResults)
         }
       });
     });
    });
 });
+
+app.get('/api/getUsers', function(req, res)
+{
+  var query =  dataStorage.handleGetUsers(fs)
+  query.exec(function(err,results){
+    if(err)
+    {
+      res.status(400).send(error);
+    }
+    res.status(200).send(results)
+   });
+});
+
+app.get('/api/getVendors', function(req, res)
+{
+  var query =  dataStorage.handleGetVendors(fs)
+  query.exec(function(err,results){
+    if(err)
+    {
+      res.status(400).send(error);
+    }
+    res.status(200).send(results)
+   });
+});
+
 
 app.get('/api/getEvent/:id', function(req, res)
 {
@@ -59,34 +84,21 @@ app.get('/api/getEvent/:id', function(req, res)
   {
     if(error)
     {
-      res.send(400, error);
+      res.status(400).send(error);
     }
-
-    results.forEach(function(result)
-    {
-      if(error)
-      {
-        res.send(400, error);
-      }
-      dataStorage.handleGetVendor(fs, result.vendorUsername).exec(function(error, vendors)
-      {
-        var mergedResult = JSON.parse(JSON.stringify(result));
-        mergedResult.vendor = vendors[0];
-        res.send(200, mergedResult);
-      });
-    });
+    res.status(200).send(results);
   });
 });
 
 app.get('/api/getVendor/:username', function(req, res)
 {
   const username = req.params['username'];
-  var query =  dataStorage.handleGet(fs, username)
+  var query =  dataStorage.handleGetVendor(fs, username)
   query.exec(function(err,results){
    if(err)
-      res.send(400, err);
+   res.status(400).send(error);
    results.forEach(function(result){
-      res.send(200, result);
+    res.status(200).send(result);
    });
   });
 });
@@ -97,8 +109,8 @@ app.get('/api/getReviews/:vendorUsername', function(req, res)
   var query =  dataStorage.handleGetReviews(fs, requestedUsername)
   query.exec(function(err,results){
    if(err)
-      res.send(400, err);
-   res.send(200, results);
+    res.status(400).send(error);
+   res.status(200).send(results);
   });
 });
 
@@ -112,7 +124,7 @@ app.post('/api/createAccount', function(req, res)
 	catch (err)
 	{
 		console.log(err);
-		res.send(400, "invalid request");
+		res.status(400).send(error);
 	}
 });
 
@@ -121,23 +133,28 @@ app.post('/api/createReview', function(req, res)
 	try
 	{
 		console.log("in create");
-		res.send(201, dataStorage.handleReviewPost(req));
+		res.status(201).send(dataStorage.handleReviewPost(req));
 	}
 	catch (err)
 	{
 		console.log(err);
-		res.send(400, "invalid request");
+		res.status(400).send(error);
 	}
 });
 
 app.post('/api/createEvent', function(req, res)
 {
-	res.send(201, dataStorage.handleEventPost(req));
+	res.status(201).send(dataStorage.handleEventPost(req));
 });
 
 app.post('/api/createVendor', function(req, res)
 {
-	res.send(201, dataStorage.handleVendorPost(req));
+	res.status(201).send(dataStorage.handleVendorPost(req));
+});
+
+app.post('/api/deleteEvent', function(req, res)
+{
+	res.status(201).send(dataStorage.handleDeleteEvent());
 });
 
 app.listen(8080, function()
