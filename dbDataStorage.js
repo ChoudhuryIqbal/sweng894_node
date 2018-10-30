@@ -110,15 +110,14 @@ module.exports.handleVendorPost = function(request)
 {
 	var Vendor = mongoose.model("vendor", vendorSchema);
 
-	 var thisVendor = new Vendor({
+	 Vendor.updateOne({
 		username:request.body.username,
 		name:request.body.name,
 		foodType:request.body.foodType,
 		description:request.body.description,
-		menu:request.body.menu
-	 });
-
-	 thisVendor.save(function(error) {
+		menu:request.body.menu,
+		upsert : true
+	 }, function(error) {
 	     console.log("Vendor has been saved!");
 	 if (error) {
 	     console.error(error);
@@ -126,13 +125,16 @@ module.exports.handleVendorPost = function(request)
 	 });
 };
 
-module.exports.handleDeleteEvent = function()
+module.exports.handleDeleteEvent = function(request)
 {
 	var Event = mongoose.model("event", eventSchema);
 
-	Event.findByIdAndRemove();
-	Event.findAndModify ("5bcd0d7cdb8017036492b66a", { id: '1' });
-	return "ok";
+	Event.deleteMany,({}, function(error) {
+		console.log("Vendor has been saved!");
+	if (error) {
+		console.error(error);
+	 }
+	});
 };
 
 module.exports.handleGetReviews = function(fs, requestedUsername)

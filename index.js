@@ -10,11 +10,12 @@ app.get('/api/getAccount/:user', function(req, res)
   const requestedUser = req.params['user'];
   var query =  dataStorage.handleGet(fs, requestedUser)
   query.exec(function(err,results){
-   if(err)
-   res.status(400).send(error);
-   results.forEach(function(result){
-    res.status(200).send(result);
-   });
+   if(err){
+       res.status(400).send(error);
+   }else{
+     console.log("result=" + results[0]);
+        res.status(200).send(results[0]);
+   }
   });
 });
 
@@ -26,28 +27,31 @@ app.get('/api/getEvents', function(req, res)
     if(err)
     {
       res.status(400).send(error);
+    }else{
+      var resultsProcessedSoFar = 0;
+      results.forEach(function(result)
+      {
+        console.log("getEvents vendorUsername=" + result.vendorUsername)
+        dataStorage.handleGetVendor(fs, result.vendorUsername).exec(function(error, vendors)
+        {
+          if(error)
+          {
+            res.status(400).send(error);
+          }else{
+            var mergedResult = JSON.parse(JSON.stringify(result));
+            mergedResult.vendor = vendors[0];
+            newResults.push(mergedResult);
+            resultsProcessedSoFar++;
+    
+            if(resultsProcessedSoFar === results.length)
+            {
+              res.status(200).send(newResults)
+            }
+          }
+        });
+      });
     }
 
-    var resultsProcessedSoFar = 0;
-    results.forEach(function(result)
-    {
-      dataStorage.handleGetVendor(fs, result.vendorUsername).exec(function(error, vendors)
-      {
-        if(error)
-        {
-          res.status(400).send(error);
-        }
-        var mergedResult = JSON.parse(JSON.stringify(result));
-        mergedResult.vendor = vendors[0];
-        newResults.push(mergedResult);
-        resultsProcessedSoFar++;
-
-        if(resultsProcessedSoFar === results.length)
-        {
-          res.status(200).send(newResults)
-        }
-      });
-    });
    });
 });
 
@@ -154,7 +158,7 @@ app.post('/api/createVendor', function(req, res)
 
 app.post('/api/deleteEvent', function(req, res)
 {
-	res.status(201).send(dataStorage.handleDeleteEvent());
+	res.status(201).send(dataStorage.handleDeleteEvent(req));
 });
 
 app.listen(8080, function()
