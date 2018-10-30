@@ -22,7 +22,7 @@ var userSchema = new Schema({
 var reviewSchema = new Schema({
 	vendorUsername:String,
 	comment: String,
-	rating: Number, 
+	rating: Number,
 	loggedInUser : String
 });
 
@@ -125,7 +125,7 @@ module.exports.handleVendorPost = function(request)
 	 });
 };
 
-module.exports.handleDeleteEvent = function(request)
+module.exports.handleDeleteAll = function(request)
 {
 	var Event = mongoose.model("event", eventSchema);
 
@@ -137,12 +137,21 @@ module.exports.handleDeleteEvent = function(request)
 	});
 };
 
+module.exports.handleDeleteEvent = function(requestedID)
+{
+	var Event = mongoose.model("event", eventSchema);
+
+  console.log(typeof requestedID);
+	Event.findOneAndRemove({id: requestedID}, function(){});
+  return "okay";
+};
+
 module.exports.handleGetReviews = function(fs, requestedUsername)
 {
  	var Review = mongoose.model("review", reviewSchema);
 
 	return Review.find({vendorUsername: requestedUsername});
-}
+};
 
 module.exports.handleGet = function(fs, requestedUser)
 {
@@ -185,5 +194,3 @@ module.exports.handleGetUsers = function(fs)
 
 	return User.find({});
 };
-
-
