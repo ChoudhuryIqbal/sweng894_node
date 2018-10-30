@@ -152,9 +152,10 @@ app.post('/api/createVendor', function(req, res)
 	res.status(201).send(dataStorage.handleVendorPost(req));
 });
 
-app.post('/api/deleteEvent', function(req, res)
+app.delete('/api/deleteEvent/:id', function(req, res)
 {
-	res.status(201).send(dataStorage.handleDeleteEvent());
+  const id = Number(req.params['id']);
+	res.status(200).send(dataStorage.handleDeleteEvent(id));
 });
 
 app.listen(8080, function()

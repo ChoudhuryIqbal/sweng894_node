@@ -22,7 +22,7 @@ var userSchema = new Schema({
 var reviewSchema = new Schema({
 	vendorUsername:String,
 	comment: String,
-	rating: Number, 
+	rating: Number,
 	loggedInUser : String
 });
 
@@ -126,13 +126,13 @@ module.exports.handleVendorPost = function(request)
 	 });
 };
 
-module.exports.handleDeleteEvent = function()
+module.exports.handleDeleteEvent = function(requestedID)
 {
 	var Event = mongoose.model("event", eventSchema);
 
-	Event.findByIdAndRemove();
-	Event.findAndModify ("5bcd0d7cdb8017036492b66a", { id: '1' });
-	return "ok";
+  console.log(typeof requestedID);
+	Event.findOneAndRemove({id: requestedID}, function(){});
+  return "okay";
 };
 
 module.exports.handleGetReviews = function(fs, requestedUsername)
@@ -183,5 +183,3 @@ module.exports.handleGetUsers = function(fs)
 
 	return User.find({});
 };
-
-
