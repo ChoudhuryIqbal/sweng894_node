@@ -158,12 +158,8 @@ app.post('/api/createVendor', function(req, res)
 
 app.delete('/api/deleteEvent/:id', function(req, res)
 {
-<<<<<<< HEAD
-	res.status(201).send(dataStorage.handleDeleteEvent(req));
-=======
   const id = Number(req.params['id']);
 	res.status(200).send(dataStorage.handleDeleteEvent(id));
->>>>>>> 71c7d5f2db5ff665c5aa75feb25c7cc0578c8921
 });
 
 app.listen(8080, function()
