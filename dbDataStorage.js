@@ -46,6 +46,7 @@ var vendorSchema = new Schema({
 	name:String,
 	foodType:String,
 	description:String,
+	region:String,
 	menu:Array
 });
 
@@ -110,14 +111,16 @@ module.exports.handleVendorPost = function(request)
 {
 	var Vendor = mongoose.model("vendor", vendorSchema);
 
-	 Vendor.updateOne({
-		username:request.body.username,
+	console.log("find=" + Vendor.find({username : request.body.username}))
+	 Vendor.updateOne({username : request.body.username},
+		{username : request.body.username,
 		name:request.body.name,
 		foodType:request.body.foodType,
 		description:request.body.description,
-		menu:request.body.menu,
-		upsert : true
-	 }, function(error) {
+		region:request.body.region,
+		menu:request.body.menu},
+		{upsert : true}
+	 , function(error) {
 	     console.log("Vendor has been saved!");
 	 if (error) {
 	     console.error(error);
