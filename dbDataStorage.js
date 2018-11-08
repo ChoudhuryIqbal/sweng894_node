@@ -17,6 +17,7 @@ var userSchema = new Schema({
 		unique: true
 	},
 	password: String,
+	preferredRegion: String
 });
 
 var reviewSchema = new Schema({
