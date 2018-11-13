@@ -71,21 +71,22 @@ module.exports.handleEventPost = function(request)
 {
   	var Event = mongoose.model("event", eventSchema);
 
-	 var thisEvent = new Event({
-	        id:request.body.id,
+	  console.log("id=" + request.body.id)
+	 Event.updateOne({id:request.body.id},
+		{id:request.body.id,
 		vendorUsername:request.body.vendorUsername,
 		saleDescription:request.body.saleDescription,
 		start:request.body.start,
 		end:request.body.end,
-		address:request.body.address
-	 });
-
-	 thisEvent.save(function(error) {
+		address:request.body.address},
+		{upsert : true}
+	 , function(error) {
 	     console.log("Event has been saved!");
 	 if (error) {
 	     console.error(error);
 	  }
 	 });
+
 };
 
 module.exports.handleReviewPost = function(request)
@@ -111,7 +112,6 @@ module.exports.handleVendorPost = function(request)
 {
 	var Vendor = mongoose.model("vendor", vendorSchema);
 
-	console.log("find=" + Vendor.find({username : request.body.username}))
 	 Vendor.updateOne({username : request.body.username},
 		{username : request.body.username,
 		name:request.body.name,
@@ -145,7 +145,8 @@ module.exports.handleDeleteEvent = function(requestedID)
 	var Event = mongoose.model("event", eventSchema);
 
   console.log(typeof requestedID);
-	Event.findOneAndRemove({id: requestedID}, function(){});
+  console.log("id=" + requestedID);
+  Event.findOneAndDelete({id: requestedID}, function(){});
   return "okay";
 };
 
