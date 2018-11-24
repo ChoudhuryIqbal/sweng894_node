@@ -1,6 +1,8 @@
 var express = require('express');
 var dataStorage = require('./dbDataStorage.js');
+var secretSauce = require('./secretSauce');
 var bodyParser = require('body-parser');
+var arraySort = require('array-sort');
 var app = express();
 var fs = require('fs');
 
@@ -29,6 +31,7 @@ app.get('/api/getEvents', function(req, res)
       res.status(400).send(error);
     }else{
       var resultsProcessedSoFar = 0;
+	  var reviewsProcessed = false;
       results.forEach(function(result)
       {
         console.log("getEvents vendorUsername=" + result.vendorUsername)
@@ -38,15 +41,61 @@ app.get('/api/getEvents', function(req, res)
           {
             res.status(400).send(error);
           }else{
-            var mergedResult = JSON.parse(JSON.stringify(result));
-            mergedResult.vendor = vendors[0];
-            newResults.push(mergedResult);
-            resultsProcessedSoFar++;
-    
-            if(resultsProcessedSoFar === results.length)
-            {
-              res.status(200).send(newResults)
-            }
+			dataStorage.handleGetReviews(fs, result.vendorUsername).exec(function(error, reviews)
+			{
+				if(error)
+				{
+					res.status(400).send(error);
+				}
+				else
+				{
+					console.log('Retrieving reviews for ' + result.vendorUsername);
+					var reviewsProcessedSoFar = 0;
+					var reviewScore = 0;
+					console.log(JSON.stringify(reviews));
+					if(0 === reviews.length)
+					{
+						var mergedResult = JSON.parse(JSON.stringify(result));
+						mergedResult.vendor = vendors[0];
+						mergedResult.averageScore = 0;
+						secretSauce.applyRatings(mergedResult, req.query.address);
+						newResults.push(mergedResult);
+						resultsProcessedSoFar++;
+						if(resultsProcessedSoFar === results.length)
+						{
+						  arraySort(newResults, 'relevancyScore', {reverse: true});
+						  res.status(200).send(newResults);
+						}
+					}
+					else
+					{
+						reviews.forEach(function(review)
+						{
+							//console.log('Parsing review ' + JSON.stringify(review));
+							reviewScore += review.rating;
+							reviewsProcessedSoFar++;
+							if(reviewsProcessedSoFar >= reviews.length)
+							{
+								var meanReview = reviewScore/reviewsProcessedSoFar;
+								var mergedResult = JSON.parse(JSON.stringify(result));
+								mergedResult.vendor = vendors[0];
+								mergedResult.averageScore = meanReview;
+								secretSauce.applyRatings(mergedResult, req.query.address);
+								newResults.push(mergedResult);
+								console.log('incrementing results');
+								resultsProcessedSoFar++;
+						
+								console.log('Results processed: ' + resultsProcessedSoFar + ' . Results length: ' + results.length);
+								if(resultsProcessedSoFar === results.length)
+								{
+								  arraySort(newResults, 'relevancyScore', {reverse: true});
+								  res.status(200).send(newResults);
+								}
+							}
+						});
+					}
+				}
+			});
           }
         });
       });
