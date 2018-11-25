@@ -5,8 +5,9 @@ var bodyParser = require('body-parser');
 var arraySort = require('array-sort');
 var app = express();
 var fs = require('fs');
+var cors = require('cors');
 
-app.use(bodyParser.json());
+app.use(cors());
 app.get('/api/getAccount/:user', function(req, res)
 {
   const requestedUser = req.params['user'];
