@@ -7,7 +7,7 @@ var app = express();
 var fs = require('fs');
 var cors = require('cors');
 
-app.use(cors());
+app.use(cors(), bodyParser.json());
 app.get('/api/getAccount/:user', function(req, res)
 {
   const requestedUser = req.params['user'];
